@@ -60,3 +60,54 @@
   margin-bottom: 15px;
   color: #213547;
 }
+
+.counter-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.counter-title {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.counter-text {
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.counter-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #0b3d91;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.counter-button:hover {
+  background-color: #1a5db4;
+}
+
+.button-container {
+  margin-bottom: 15px;
+}
+
+.display-container {
+  padding: 10px;
+}
+
+.counter-display {
+  text-align: center;
+}
+
+.counter-message {
+  font-size: 1em;
+  color: #555;
+  margin-top: 10px;
+}

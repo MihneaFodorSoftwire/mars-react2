@@ -1,6 +1,6 @@
 import './App.css'
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 
 interface ContentSectionProps {
     title: string;
@@ -9,6 +9,89 @@ interface ContentSectionProps {
     imageSrc: string;
     imageAlt: string;
 }
+
+interface CounterContextType {
+    count: number;
+    setCount: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const CounterContext = createContext<CounterContextType | undefined>(undefined);
+
+// component 1
+const AnomalyCounter: React.FC = () => {
+    const [count, setCount] = useState(0);
+
+    return (
+        <CounterContext.Provider value={{ count, setCount }}>
+            <div className="counter-container">
+                <h2 className="counter-title">Anomaly Counter</h2>
+                <ButtonContainer />
+                <DisplayContainer />
+            </div>
+        </CounterContext.Provider>
+    );
+};
+
+// component 2
+const ButtonContainer: React.FC = () => {
+    return (
+        <div className="button-container">
+            <CounterButton />
+        </div>
+    );
+};
+
+// button
+const CounterButton: React.FC = () => {
+    const context = useContext(CounterContext);
+    if (!context) {
+        throw new Error('CounterButton must be used within a CounterContext.Provider');
+    }
+    const { setCount } = context;
+
+    const handleClick = () => {
+        setCount((prevCount) => prevCount + 1);
+    };
+
+    return (
+        <button className="counter-button" onClick={handleClick}>
+            Report Anomaly
+        </button>
+    );
+};
+
+// component 3
+const DisplayContainer: React.FC = () => {
+    const context = useContext(CounterContext);
+    if (!context) {
+        throw new Error('CounterDisplay must be used within a CounterContext.Provider');
+    }
+    const { count } = context;
+
+    return (
+        <div className="display-container">
+            <CounterDisplay />
+            <p className="counter-message">
+                {count === 0 ? 'No anomalies reported yet!' : `You've reported ${count} anomal${count === 1 ? 'y' : 'ies'}!`}
+            </p>
+        </div>
+    );
+};
+
+//component 4
+const CounterDisplay: React.FC = () => {
+    const context = useContext(CounterContext);
+    if (!context) {
+        throw new Error('CounterDisplay must be used within a CounterContext.Provider');
+    }
+    const { count } = context;
+
+    return (
+        <div className="counter-display">
+            <p className="counter-text">Anomalies Reported: {count}</p>
+        </div>
+    );
+};
 
 const ClickCounter: React.FC = ()=> {
    const [count, setCount] = useState(0);
@@ -59,6 +142,7 @@ function App() {
           imageSrc={"https://science.nasa.gov/wp-content/uploads/2024/03/sol058-to-060-lion-king-pia05755.jpg"}
           imageAlt={"Alien ship"}/>
           <ClickCounter />
+          <AnomalyCounter />
       </>
   )
 }
