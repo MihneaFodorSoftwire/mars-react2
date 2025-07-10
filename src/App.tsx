@@ -49,9 +49,19 @@ const CounterButton: React.FC = () => {
     }
     const { setCount } = context;
 
+    useEffect(() => {
+        const storedCount = localStorage.getItem('anomalyCount');
+        if (storedCount) {
+            setCount(parseInt(storedCount, 10));
+        }
+        console.log('Initialized count from localStorage:', storedCount);
+    }, []);
+
     const handleClick = () => {
         setCount((prevCount) => prevCount + 1);
-    };
+        localStorage.setItem('anomalyCount', (context.count + 1).toString());
+        console.log('Saved count to localStorage:', context.count);
+    }
 
     return (
         <button className="counter-button" onClick={handleClick}>
