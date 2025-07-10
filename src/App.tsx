@@ -1,6 +1,6 @@
 import './App.css'
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 interface ContentSectionProps {
     title: string;
@@ -13,8 +13,18 @@ interface ContentSectionProps {
 const ClickCounter: React.FC = ()=> {
    const [count, setCount] = useState(0);
 
+    useEffect(() => {
+        const storedCount = localStorage.getItem('clickCount');
+        if (storedCount) {
+            setCount(parseInt(storedCount, 10));
+        }
+        console.log('Initialized count from localStorage:', storedCount);
+    }, []);
+
    const handleClick = () => {
        setCount(count + 1);
+       localStorage.setItem('clickCount', (count + 1).toString());
+       console.log('Saved count to localStorage:', count);
    }
 
     return (
