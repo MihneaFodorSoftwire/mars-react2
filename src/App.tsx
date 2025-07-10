@@ -2,6 +2,7 @@ import './App.css'
 import * as React from "react";
 import {createContext, useContext, useEffect, useState} from "react";
 import {BrowserRouter, Link, Route, Routes} from "react-router-dom";
+import styled from "styled-components";
 
 interface ContentSectionProps {
     title: string;
@@ -16,6 +17,19 @@ interface CounterContextType {
     setCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const CounterContainer = styled.div`
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+`;
+
+const CounterTitle = styled.h2`
+  font-size: 1.8em;
+  color: #535;
+  margin-bottom: 15px;
+`;
+
 const CounterContext = createContext<CounterContextType | undefined>(undefined);
 
 // component 1
@@ -24,11 +38,11 @@ const AnomalyCounter: React.FC = () => {
 
     return (
         <CounterContext.Provider value={{ count, setCount }}>
-            <div className="counter-container">
-                <h2 className="counter-title">Anomaly Counter</h2>
+            <CounterContainer>
+                <CounterTitle>Anomaly Counter</CounterTitle>
                 <ButtonContainer />
                 <DisplayContainer />
-            </div>
+            </CounterContainer>
         </CounterContext.Provider>
     );
 };
